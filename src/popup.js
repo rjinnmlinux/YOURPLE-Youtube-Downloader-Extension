@@ -1,167 +1,98 @@
+// YOURPLE Popup.js: YouTube Downloader
+
 document.addEventListener('DOMContentLoaded', () => {
-  const noVideoSection = document.getElementById('no-video');
-  const videoInfoSection = document.getElementById('video-info');
-  const videoThumbnail = document.getElementById('video-thumbnail');
-  const videoTitle = document.getElementById('video-title');
-  const videoDuration = document.getElementById('video-duration');
-  const channelName = document.getElementById('channel-name');
-  const videoQualities = document.getElementById('video-qualities');
-  const audioQualities = document.getElementById('audio-qualities');
-  const progressContainer = document.getElementById('download-progress');
-  const progressBar = document.getElementById('progress');
-  const progressText = document.getElementById('progress-text');
-  const openYouTubeBtn = document.getElementById('open-youtube');
-  const settingsBtn = document.getElementById('settings-btn');
-  
-  // Current video information
+  const videoTitleElem = document.getElementById('videoTitle');
+  const channelElem = document.getElementById('channel');
+  const thumbnailElem = document.getElementById('thumbnail');
+  const qualitiesElem = document.getElementById('qualities');
+  const progressContainer = document.getElementById('progressContainer');
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const errorElem = document.getElementById('error');
+
   let currentVideo = null;
 
-  // Check if we're on a YouTube video page
-  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-    const currentTab = tabs[0];
-    const url = currentTab.url;
-    
-    if (isYouTubeVideoUrl(url)) {
-      // We're on a YouTube video page
-      noVideoSection.classList.add('hidden');
-      videoInfoSection.classList.remove('hidden');
-      
-      // Get video information
-      chrome.tabs.sendMessage(currentTab.id, {action: 'getVideoInfo'}, (response) => {
-        if (response && response.videoInfo) {
-          displayVideoInfo(response.videoInfo);
-        } else {
-          showError('Could not retrieve video information');
-        }
-      });
-    } else {
-      // Not on a YouTube video page
-      noVideoSection.classList.remove('hidden');
-      videoInfoSection.classList.add('hidden');
-    }
-  });
-  
-  // Handle "Go to YouTube" button click
-  openYouTubeBtn.addEventListener('click', () => {
-    chrome.tabs.create({url: 'https://www.youtube.com'});
-  });
-  
-  // Handle settings button click
-  settingsBtn.addEventListener('click', () => {
-    chrome.runtime.openOptionsPage();
-  });
-  
-  // Display video information
-  function displayVideoInfo(videoInfo) {
-    currentVideo = videoInfo;
-    
-    videoThumbnail.src = videoInfo.thumbnail;
-    videoTitle.textContent = videoInfo.title;
-    videoDuration.textContent = formatDuration(videoInfo.duration);
-    channelName.textContent = videoInfo.channelName;
-    
-    // Display video quality options
-    videoQualities.innerHTML = '';
-    videoInfo.videoQualities.forEach(quality => {
-      const qualityBtn = createQualityButton(quality, 'video');
-      videoQualities.appendChild(qualityBtn);
-    });
-    
-    // Display audio quality options
-    audioQualities.innerHTML = '';
-    videoInfo.audioQualities.forEach(quality => {
-      const qualityBtn = createQualityButton(quality, 'audio');
-      audioQualities.appendChild(qualityBtn);
-    });
+  function showError(msg) {
+    errorElem.textContent = msg;
+    errorElem.classList.remove('hidden');
+    setTimeout(() => {
+      errorElem.classList.add('hidden');
+    }, 4000);
   }
-  
-  // Create quality selection button
-  function createQualityButton(quality, type) {
-    const button = document.createElement('button');
-    button.classList.add('quality-btn');
-    button.setAttribute('data-quality', quality.id);
-    button.setAttribute('data-type', type);
-    
-    if (type === 'video') {
-      button.textContent = `${quality.label} (${quality.fileSize})`;
-    } else {
-      button.textContent = `${quality.label} MP3 (${quality.fileSize})`;
-    }
-    
-    button.addEventListener('click', () => {
-      initiateDownload(quality, type);
-    });
-    
-    return button;
+
+  function updateDownloadProgress(percent) {
+    progressBar.style.width = percent + '%';
+    progressText.textContent = 'Download progress: ' + percent + '%';
   }
-  
-  // Initiate download process
+
   function initiateDownload(quality, type) {
     progressContainer.classList.remove('hidden');
     progressText.textContent = 'Preparing download...';
     progressBar.style.width = '0%';
-    
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      const currentTab = tabs[0];
-      
-      chrome.tabs.sendMessage(
-        currentTab.id, 
-        {
-          action: 'downloadVideo',
-          qualityId: quality.id,
-          type: type,
-          videoId: currentVideo.id
-        }, 
-        (response) => {
-          if (response && response.success) {
-            updateDownloadProgress(0);
-            
-            // Simulate download progress
-            const downloadInterval = setInterval(() => {
-              const currentWidth = parseInt(progressBar.style.width, 10) || 0;
-              if (currentWidth >= 100) {
-                clearInterval(downloadInterval);
-                progressText.textContent = 'Download complete!';
-                setTimeout(() => {
-                  progressContainer.classList.add('hidden');
-                }, 2000);
-              } else {
-                updateDownloadProgress(currentWidth + 5);
-              }
-            }, 300);
-          } else {
-            showError('Failed to start download');
-          }
-        }
-      );
+
+    chrome.runtime.sendMessage({
+      action: 'downloadVideo',
+      url: quality.url,
+      format: type === 'audio' ? 'mp3' : 'mp4',
+      filename: currentVideo.title.replace(/[\\\/:*?"<>|]/g, "") + '_' + quality.label
+    }, response => {
+      if (response && response.success) {
+        updateDownloadProgress(100);
+        progressText.textContent = 'Download started!';
+        setTimeout(() => {
+          progressContainer.classList.add('hidden');
+        }, 2000);
+      } else {
+        showError('Download failed: ' + (response.error || 'Unknown error'));
+      }
     });
   }
-  
-  // Update download progress
-  function updateDownloadProgress(percent) {
-    progressBar.style.width = `${percent}%`;
-    if (percent < 100) {
-      progressText.textContent = `Downloading: ${percent}%`;
+
+  function renderQualities(videoQualities = []) {
+    qualitiesElem.innerHTML = '';
+    if (!videoQualities.length) {
+      qualitiesElem.innerHTML = '<div>No downloadable qualities found.</div>';
+      return;
     }
+    videoQualities.forEach(quality => {
+      const btn = document.createElement('button');
+      btn.textContent = `${quality.label} ${quality.fileSize ? ' - ' + quality.fileSize : ''}`;
+      btn.className = 'quality-btn';
+      btn.addEventListener('click', () => initiateDownload(quality, 'video'));
+      qualitiesElem.appendChild(btn);
+    });
+    // For audio only, add MP3 option if available later
+    /*
+    if (videoQualities.length && videoQualities[0].audioUrl) {
+      const abtn = document.createElement('button');
+      abtn.textContent = 'Download MP3 (audio only)';
+      abtn.className = 'quality-btn audio-btn';
+      abtn.addEventListener('click', () => initiateDownload(videoQualities[0], 'audio'));
+      qualitiesElem.appendChild(abtn);
+    }
+    */
   }
-  
-  // Show error message
-  function showError(message) {
-    progressContainer.classList.remove('hidden');
-    progressText.textContent = message;
-    progressBar.style.width = '100%';
-    progressBar.style.backgroundColor = '#f44336';
+
+  function renderInfo(info) {
+    videoTitleElem.textContent = info.title;
+    channelElem.textContent = info.channelName;
+    thumbnailElem.src = info.thumbnail;
+    currentVideo = info;
+    renderQualities(info.videoQualities);
   }
-  
-  // Check if URL is a YouTube video
-  function isYouTubeVideoUrl(url) {
-    return /^(https?:\/\/)?(www\.)?(youtube\.com\/watch|youtu\.be\/|youtube\.com\/shorts)/.test(url);
-  }
-  
-  // Format duration from seconds to MM:SS
-  function formatDuration(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  }
+
+  // Get video info from content script
+  chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+    if (!tabs.length) {
+      showError('Cannot detect YouTube tab.');
+      return;
+    }
+    chrome.tabs.sendMessage(tabs[0].id, {action: 'getVideoInfo'}, response => {
+      if (!response || !response.videoInfo) {
+        showError('Failed to get video info. Make sure you are on a YouTube video page.');
+        return;
+      }
+      renderInfo(response.videoInfo);
+    });
+  });
 });
