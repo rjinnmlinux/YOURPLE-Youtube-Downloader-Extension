@@ -1,81 +1,95 @@
-# Tubly Downloader - YouTube Downloader Chrome Extension
+# YOURPLE - YouTube Downloader Chrome Extension
 
 <p align="center">
-  <img src="logo/icon128.png" width="64" height="64" alt="YouTube Downloader Logo">
+  <img src="logo/yourple-icon128.png" width="96" height="96" alt="YOURPLE Logo">
 </p>
 
-<h3 align="center">Download YouTube videos in 4K, convert to MP3, and save YouTube Shorts</h3>
+<h3 align="center">YOURPLE brings you the easiest way to download YouTube videos in 4K, convert to MP3, and grab Shorts — all with a sleek deep purple vibe. No ads. No clutter. Just fast, secure downloads.</h3>
 
-<p align="center">
-  <a href="https://github.com/tublydownloader/Youtube-Downloader-Extension/releases/latest">
-    <img src="https://img.shields.io/github/v/release/tublydownloader/Youtube-Downloader-Extension?style=for-the-badge&logo=github" alt="Latest Release">
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/tublydownloader/Youtube-Downloader-Extension/issues/new/choose">🐛 Report Issue</a> •
-  <a href="https://tubly.download">🌐 Official Website</a>
-</p>
-
-<p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#screenshots">Screenshots</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#faq">FAQ</a>
-</p>
+---
 
 ## Key Features
 
-- **4K Video Downloads**: Download YouTube videos in ultra HD quality
-- **MP3 Conversion**: Convert YouTube videos to high-quality 320kbps MP3 audio
-- **YouTube Shorts**: Save Shorts videos with one click
-- **No Ads, No Extra Software**: Clean and straightforward downloading experience
-- **Cross-Platform**: Works on Windows, macOS, and Linux with Chrome, Edge, Firefox, Opera, Brave, and Vivaldi
-- **Private Video Support**: Download private videos and member-only content you have access to
+- **Stunning Deep Purple UI:** Modern, distraction-free design for fans of clean, elegant interfaces.
+- **4K Video Downloads:** Save any YouTube video in Ultra HD quality—including 8K where available!
+- **High-Quality MP3 Conversion:** Extract audio at 320kbps with just a click.
+- **YouTube Shorts Support:** Download Shorts instantly—no extra hoops.
+- **No Ads, No Extra Software:** 100% open source, privacy-respecting. No bundled bloat.
+- **Cross-Platform:** Works on Chrome, Edge, Brave, Vivaldi, Opera, and Firefox (see install below).
+- **Private & Member Video Support:** Download videos you have access to—even private or premium.
+- **Easy Controls:** One-click download, quality selector, clear progress bar.
+
+---
 
 ## Screenshots
 
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/cda9caef-f238-4c41-a283-a7988ea34723" width="600" alt="YouTube Downloader demo video">
+  <img src="screenshots/yourple-main.png" width="600" alt="YOURPLE Main Interface">
+</p>
+<p align="center">
+  <img src="screenshots/yourple-shorts.png" width="600" alt="YOURPLE Shorts Interface">
 </p>
 
-<p align="center">
-  <img src="screenshots/main.webp" width="600" alt="YouTube Downloader interface">
-</p>
-
-<p align="center">
-  <img src="screenshots/shorts.webp" width="600" alt="YouTube Shorts download">
-</p>
+---
 
 ## Installation
 
-### Chrome, Brave, Opera, and Vivaldi
-For detailed installation instructions on Chromium-based browsers, visit our [official website](https://tubly.download/install.html).
+### Chrome, Brave, Vivaldi, Opera
+1. Download the latest YOURPLE release from [GitHub Releases](https://github.com/rjinnmlinux/Youtube-Downloader-Extension/releases).
+2. Open `chrome://extensions`.
+3. Enable **Developer mode** at the top right.
+4. Click **Load unpacked**, select your extracted YOURPLE folder.
 
 ### Microsoft Edge
-1. Visit our [Edge Add-ons page](https://microsoftedge.microsoft.com/addons/detail/npolimekdjdhijlfikfghaipaijbbobj)
-2. Click "Get" to add the extension
-3. Follow the prompts to complete installation
+1. Same as Chrome, or visit Edge Add-ons store if available.
 
 ### Firefox
-1. Download our [Firefox add-on xpi package](https://tubly.download/firefox/tubly_downloader_v1.2.5.xpi)
-2. Firefox will automatically start the installation process
-3. Follow the prompts to complete installation
+1. Download the `.xpi` add-on release.
+2. Open Firefox Add-ons settings and choose **Install Add-on from File**.
 
-### Updating
-> Edge & Firefox users get updates automatically.
-1. For Chrome users, download the new version from our website
-2. Follow the same installation steps with the new file
-3. Your settings will be preserved automatically
+---
 
 ## FAQ
 
-### How do I download YouTube videos in 4K quality?
-Simply navigate to any YouTube video, and click the download button that appears below the video player. You'll be presented with multiple quality options, including 4K (2160p) and even 8K if available.
+**How do I download videos in 4K?**  
+Navigate to any YouTube video, click the YOURPLE icon, choose your desired quality—download instantly.
 
-### Can I download YouTube Shorts videos?
-Yes! Our Chrome extension is specially designed to detect and download YouTube Shorts. When viewing Shorts content, you'll see our download button appear, allowing you to save these short-form videos directly to your device.
+**Can I save Shorts videos?**  
+Absolutely! YOURPLE detects Shorts and offers a separate Shorts download button in the pop-up.
 
-### How does the audio extraction feature work?
-Our extension extracts audio directly from videos without requiring any additional software. After installing, you'll see an "Audio" option when clicking the download button to save in high-quality 320kbps MP3 format.
+**How is audio extraction done?**  
+Click the "Audio Only" tab in YOURPLE's popup and choose your MP3 quality (up to 320kbps).
+
+**Is YOURPLE safe and private?**  
+Yes! YOURPLE is 100% open source and does not collect or transmit any personal data. Your downloads are local and secure.
+
+---
+
+## Contributing
+
+Want to help?  
+- Fork the repo  
+- Open pull requests for features, theme tweaks, bug fixes, or translations  
+- [File issues](https://github.com/rjinnmlinux/Youtube-Downloader-Extension/issues) for bugs or suggestions
+
+---
+
+## License
+
+YOURPLE is released under the MIT License.
+
+---
+
+## Credits
+
+Originally forked and modernized from Tubly Downloader.  
+Inspired by fans of clean, beautiful UI and open source tools.
+
+---
+
+## About
+
+YOURPLE: The modern deep purple YouTube downloader for Chrome—4K, MP3, and Shorts with elegance.
+
+---
 
