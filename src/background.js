@@ -1,16 +1,21 @@
 // YOURPLE - Background Service Worker
 chrome.runtime.onInstalled.addListener(() => {
-  // Ready for future functionality or analytics
-  console.log('YOURPLE installed.');
+  console.log('YOURPLE installed (background.js).');
 });
-// Download trigger (future extension)
-// Listen for download requests from popup/content scripts
+
 chrome.runtime.onMessage.addListener((msg, sender, respond) => {
   if (msg.action === 'downloadVideo' && msg.url) {
     chrome.downloads.download({
       url: msg.url,
-      filename: `${msg.filename}.${msg.format || 'mp4'}`
+      filename: `${msg.filename || 'youtube'}.${msg.format || 'mp4'}`,
+      saveAs: false
+    }, downloadId => {
+      if (downloadId) {
+        respond({success: true});
+      } else {
+        respond({success: false, error: 'Download API failed (background.js)'});
+      }
     });
-    respond({success: true});
+    return true;
   }
 });
