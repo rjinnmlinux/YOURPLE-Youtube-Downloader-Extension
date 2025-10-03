@@ -5,7 +5,7 @@
   "description": "Download YouTube videos in 4K, convert to MP3, and save YouTube Shorts",
   "homepage_url": "https://tubly.download",
   "icons": {
-    "128": "logo/icon128.png"
+    "128": "logo/yourple-icon128.png"
   },
   "permissions": [
     "downloads",
@@ -31,7 +31,7 @@
   "action": {
     "default_popup": "src/popup.html",
     "default_icon": {
-      "128": "logo/icon128.png"
+      "128": "logo/yourple-icon128.png"
     }
   }
 }
