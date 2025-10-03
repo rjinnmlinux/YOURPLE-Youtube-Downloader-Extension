@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Tubly Downloader",
+  "name": "YOURPLE",
   "version": "1.0.0",
-  "description": "Download YouTube videos in 4K, convert to MP3, and save YouTube Shorts",
-  "homepage_url": "https://tubly.download",
+  "description": "YOURPLE: The modern deep purple YouTube downloader for Chrome—4K, MP3, and Shorts with elegance.",
+  "homepage_url": "https://yourple.download",
   "icons": {
     "128": "logo/yourple-icon128.png"
   },
