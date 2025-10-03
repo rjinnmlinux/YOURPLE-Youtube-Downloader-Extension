@@ -12,7 +12,9 @@
     "downloads.open",
     "scripting",
     "storage",
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "cookies",
+    "webRequest"
   ],
   "host_permissions": [
     "https://www.youtube.com/*",
