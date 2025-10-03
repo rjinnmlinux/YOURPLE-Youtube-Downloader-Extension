@@ -1,56 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Downloader</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <title>YOURPLE Downloader</title>
+  <style>
+    body { font-family: Arial, sans-serif; width: 320px; margin:0; padding:1em; background: #27114c; color: #eee; }
+    .thumbnail { width: 100%; border-radius: 8px; }
+    .video-info { margin-bottom: 12px; }
+    .quality-btn { display: block; width: 100%; margin-bottom: 6px; background: #532a82; color: #fff; border: none; padding: 8px; border-radius: 5px; cursor:pointer; }
+    .quality-btn:hover { background: #8453ad; }
+    #progressContainer { margin-top: 8px; }
+    #progressBar { width: 0%; height: 8px; background: #fff27e; border-radius:4px; transition:width 0.3s; }
+    #error { color: #ff8c90; margin-top:8px; display:none; font-weight: bold;}
+    #error.visible { display: block; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <img src="../assets/logo.png" alt="YouTube Downloader Logo" class="logo">
-      <h1>YouTube Downloader</h1>
-    </div>
-    
-    <div id="no-video" class="message">
-      <p>Please navigate to a YouTube video to use this extension.</p>
-      <button id="open-youtube" class="btn primary">Go to YouTube</button>
-    </div>
-    
-    <div id="video-info" class="hidden">
-      <div class="thumbnail-container">
-        <img id="video-thumbnail" src="" alt="Video thumbnail">
-        <span id="video-duration" class="duration"></span>
-      </div>
-      <h2 id="video-title" class="title"></h2>
-      <p id="channel-name" class="channel"></p>
-      
-      <div class="download-section">
-        <h3>Video Quality</h3>
-        <div id="video-qualities" class="quality-options">
-          <!-- Quality options will be inserted here by JavaScript -->
-        </div>
-        
-        <h3>Audio Only</h3>
-        <div id="audio-qualities" class="quality-options">
-          <!-- Audio options will be inserted here by JavaScript -->
-        </div>
-      </div>
-      
-      <div id="download-progress" class="progress-container hidden">
-        <div class="progress-bar">
-          <div id="progress" class="progress"></div>
-        </div>
-        <p id="progress-text">Preparing download...</p>
-      </div>
-      
-      <div class="footer">
-        <button id="settings-btn" class="btn secondary">Settings</button>
-        <span class="version">v1.0.0</span>
-      </div>
-    </div>
+  <div class="video-info">
+    <img id="thumbnail" class="thumbnail" src="" alt="Thumbnail">
+    <div id="videoTitle"></div>
+    <div id="channel"></div>
   </div>
-  <script src="popup.js"></script>
+  <div id="qualities"></div>
+  <div id="progressContainer" class="hidden">
+    <div id="progressBar"></div>
+    <div id="progressText"></div>
+  </div>
+  <div id="error" class="hidden"></div>
 </body>
 </html>
